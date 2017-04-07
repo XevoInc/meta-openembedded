@@ -19,7 +19,7 @@ SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://0001-Fix-kernel-detection.patch \
            "
 
-SRCREV = "538ea037a1549b6fd4e57529f7448a3fd2aa47af"
+SRCREV = "stable-10.0.5"
 
 S = "${WORKDIR}/git/open-vm-tools"
 
