@@ -1,0 +1,66 @@
+From a8680a90844df18f2ef10d3246c660959b352ff2 Mon Sep 17 00:00:00 2001
+From: Martin Kelly <mkelly@xevo.com>
+Date: Fri, 7 Apr 2017 14:50:45 -0700
+Subject: [PATCH] nicInfo: fix header include order
+
+Sadly, sys/param.h has #define's for MAX and MIN, unprotected by an #undef or
+similar. This means that sys/param.h must be included *after* glib.h or
+vm_basic_defs.h, which both also #include MAX and MIN (although those at least
+are protected by #ifndef).
+
+Signed-off-by: Martin Kelly <mkelly@xevo.com>
+---
+ lib/include/nicInfo.h        | 4 ++--
+ lib/nicInfo/compareNicInfo.c | 2 +-
+ lib/nicInfo/util.c           | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/lib/include/nicInfo.h b/lib/include/nicInfo.h
+index 6d116e5..186966a 100644
+--- a/lib/include/nicInfo.h
++++ b/lib/include/nicInfo.h
+@@ -27,10 +27,10 @@
+ #ifndef NICINFO_H
+ #define NICINFO_H
+ 
+-#include <glib.h>
+-
+ #include "guestInfo.h"
+ 
++#include <glib.h>
++
+ Bool GuestInfo_GetFqdn(int outBufLen, char fqdn[]);
+ Bool GuestInfo_GetNicInfo(NicInfoV3 **nicInfo);
+ void GuestInfo_FreeNicInfo(NicInfoV3 *nicInfo);
+diff --git a/lib/nicInfo/compareNicInfo.c b/lib/nicInfo/compareNicInfo.c
+index d96b84e..63e92bc 100644
+--- a/lib/nicInfo/compareNicInfo.c
++++ b/lib/nicInfo/compareNicInfo.c
+@@ -28,8 +28,8 @@
+ 
+ #include <string.h>
+ 
+-#include "vmware.h"
+ #include "xdrutil.h"
++#include "vmware.h"
+ 
+ #include "nicInfoInt.h"
+ 
+diff --git a/lib/nicInfo/util.c b/lib/nicInfo/util.c
+index 9f7cbb5..5cee23a 100644
+--- a/lib/nicInfo/util.c
++++ b/lib/nicInfo/util.c
+@@ -24,9 +24,9 @@
+ 
+ #include <string.h>
+ 
+-#include "vmware.h"
+ #include "nicInfoInt.h"
+ #include "xdrutil.h"
++#include "vmware.h"
+ 
+ 
+ /*
+-- 
+2.1.4
+
