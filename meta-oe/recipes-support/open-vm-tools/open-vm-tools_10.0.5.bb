@@ -19,6 +19,7 @@ SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://0001-Fix-kernel-detection.patch \
            file://0002-Fix-build-failure-with-GCC-6.patch \
            file://0003-nicInfo-fix-header-include-order.patch \
+           file://0004-configure.ac-don-t-use-dnet-config.patch \
            "
 
 SRCREV = "stable-10.0.5"
@@ -71,4 +72,6 @@ do_install_append() {
 do_configure_prepend() {
     export CUSTOM_PROCPS_NAME=procps
     export CUSTOM_PROCPS_LIBS=-L${STAGING_LIBDIR}/libprocps.so
+    export CUSTOM_DNET_NAME=dnet
+    export CUSTOM_DNET_LIBS=-L${STAGING_LIBDIR}/libdnet.so
 }
