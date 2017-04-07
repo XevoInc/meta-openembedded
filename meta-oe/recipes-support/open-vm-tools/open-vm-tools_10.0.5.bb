@@ -17,6 +17,7 @@ SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://tools.conf \
            file://vmtoolsd.service \
            file://0001-Fix-kernel-detection.patch \
+           file://0002-Fix-build-failure-with-GCC-6.patch \
            "
 
 SRCREV = "stable-10.0.5"
