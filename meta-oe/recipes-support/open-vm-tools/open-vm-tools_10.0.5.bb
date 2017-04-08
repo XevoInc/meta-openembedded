@@ -34,9 +34,9 @@ inherit autotools systemd
 SYSTEMD_SERVICE_${PN} = "vmtoolsd.service"
 
 EXTRA_OECONF = "--without-icu --disable-multimon --disable-docs --disable-tests \
-		--without-gtk2 --without-gtkmm --without-xerces --without-pam \
+                --without-gtk2 --without-gtkmm --without-xerces --without-pam \
                 --disable-grabbitmqproxy --disable-vgauth --disable-deploypkg \
-		--without-root-privileges --without-kernel-modules"
+                --without-root-privileges --without-kernel-modules"
 
 EXTRA_OECONF += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '--without-x', d)}"
 
