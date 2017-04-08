@@ -27,23 +27,16 @@ SRCREV = "stable-10.0.5"
 S = "${WORKDIR}/git/open-vm-tools"
 
 DEPENDS = "virtual/kernel glib-2.0 util-linux libdnet procps"
-RDEPENDS_${PN} = "util-linux libdnet kernel-module-vmhgfs"
+RDEPENDS_${PN} = "util-linux libdnet"
 
-inherit module-base kernel-module-split autotools systemd
-
-# from module.bbclass...
-addtask make_scripts after do_patch before do_compile
-do_make_scripts[lockfiles] = "${TMPDIR}/kernel-scripts.lock"
-do_make_scripts[depends] = "virtual/kernel:do_shared_workdir"
-# add all splitted modules to PN RDEPENDS, PN can be empty now
-KERNEL_MODULES_META_PACKAGE = "${PN}"
+inherit autotools systemd
 
 SYSTEMD_SERVICE_${PN} = "vmtoolsd.service"
 
 EXTRA_OECONF = "--without-icu --disable-multimon --disable-docs --disable-tests \
 		--without-gtk2 --without-gtkmm --without-xerces --without-pam \
                 --disable-grabbitmqproxy --disable-vgauth --disable-deploypkg \
-		--with-linuxdir=${STAGING_KERNEL_DIR} --with-kernel-release=${KERNEL_VERSION} --without-root-privileges"
+		--without-root-privileges --without-kernel-modules"
 
 EXTRA_OECONF += "${@bb.utils.contains('DISTRO_FEATURES', 'x11', '', '--without-x', d)}"
 
