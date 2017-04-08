@@ -26,8 +26,8 @@ SRCREV = "stable-10.0.5"
 
 S = "${WORKDIR}/git/open-vm-tools"
 
-DEPENDS = "virtual/kernel glib-2.0 util-linux libdnet procps"
-RDEPENDS_${PN} = "util-linux libdnet"
+DEPENDS = "virtual/kernel glib-2.0 util-linux libdnet procps fuse"
+RDEPENDS_${PN} = "util-linux libdnet fuse"
 
 inherit autotools systemd
 
