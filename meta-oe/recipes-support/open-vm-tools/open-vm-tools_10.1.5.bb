@@ -24,6 +24,7 @@ SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://tools.conf \
            file://vmtoolsd.service \
            file://0001-Fix-kernel-detection.patch \
+           file://0002-configure.ac-don-t-use-dnet-config.patch \
            "
 
 # This is a tag rather than a branch and so should be stable.
@@ -77,4 +78,6 @@ do_install_append() {
 do_configure_prepend() {
     export CUSTOM_PROCPS_NAME=procps
     export CUSTOM_PROCPS_LIBS=-L${STAGING_LIBDIR}/libprocps.so
+    export CUSTOM_DNET_NAME=dnet
+    export CUSTOM_DNET_LIBS=-L${STAGING_LIBDIR}/libdnet.so
 }
