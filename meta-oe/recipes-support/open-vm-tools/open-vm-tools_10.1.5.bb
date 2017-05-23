@@ -25,6 +25,7 @@ SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://vmtoolsd.service \
            file://0001-Fix-kernel-detection.patch \
            file://0002-configure.ac-don-t-use-dnet-config.patch \
+           file://0003-add-include-sys-sysmacros.h.patch \
            "
 
 # This is a tag rather than a branch and so should be stable.
