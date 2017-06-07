@@ -9,7 +9,8 @@
 # in meta-openembedded by agreement of the author (Diego Dompe).
 #
 
-DECRIPTION = "open-vm-tools"
+SUMMARY = "Tools to enhance VMWare guest integration and performance"
+HOMEPAGE = "https://github.com/vmware/open-vm-tools"
 SECTION = "vmware-tools"
 
 LICENSE = "LGPLv2.1 & GPLv2 & BSD & CDDLv1"
@@ -19,6 +20,8 @@ LICENSE_modules/freebsd/vmmemctl = "GPLv2"
 LICENSE_modules/freebsd/vmxnet = "GPLv2"
 LICENSE_modules/linux = "GPLv2"
 LICENSE_modules/solaris = "CDDL"
+
+DEPENDS = "virtual/kernel glib-2.0 glib-2.0-native util-linux libdnet procps"
 
 SRC_URI = "git://github.com/vmware/open-vm-tools.git;protocol=https \
            file://tools.conf \
@@ -54,18 +57,23 @@ PACKAGECONFIG[fuse] = ",,fuse"
 
 EXTRA_OEMAKE = "KERNEL_RELEASE=${KERNEL_VERSION}"
 
+CFLAGS += "-Wno-error=deprecated-declarations"
 
-CFLAGS += '-Wno-error=deprecated-declarations'
-
-FILES_${PN} += "/usr/lib/open-vm-tools/plugins/vmsvc/lib*.so \
+FILES_${PN} += "\
+    /usr/lib/open-vm-tools/plugins/vmsvc/lib*.so \
 		/usr/lib/open-vm-tools/plugins/common/lib*.so \
-    ${sysconfdir}/vmware-tools/tools.conf"
+    ${sysconfdir}/vmware-tools/tools.conf \
+    "
 FILES_${PN}-locale += "/usr/share/open-vm-tools/messages"
 FILES_${PN}-dev += "/usr/lib/open-vm-tools/plugins/common/lib*.la"
-FILES_${PN}-dbg += "/usr/lib/open-vm-tools/plugins/common/.debug \
-		    /usr/lib/open-vm-tools/plugins/vmsvc/.debug"
+FILES_${PN}-dbg += "\
+    /usr/lib/open-vm-tools/plugins/common/.debug \
+		/usr/lib/open-vm-tools/plugins/vmsvc/.debug \
+    "
 
 CONFFILES_${PN} += "${sysconfdir}/vmware-tools/tools.conf"
+
+RDEPENDS_${PN} = "util-linux libdnet fuse"
 
 do_install_append() {
     ln -sf /usr/sbin/mount.vmhgfs ${D}/sbin/mount.vmhgfs
